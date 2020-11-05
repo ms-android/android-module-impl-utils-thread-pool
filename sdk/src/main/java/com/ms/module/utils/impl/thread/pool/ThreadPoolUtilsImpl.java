@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 
+import com.ms.module.supers.inter.utils.IThreadPoolUtilsAdapter;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -12,13 +14,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author maohuawei created in 2018/10/8
  */
-public final class ThreadPoolUtils {
+public final class ThreadPoolUtilsImpl extends IThreadPoolUtilsAdapter {
 
 
-    private static ThreadPoolUtils threadPoolUtils = new ThreadPoolUtils();
+    private static ThreadPoolUtilsImpl threadPoolUtilsImpl = new ThreadPoolUtilsImpl();
 
-    public static ThreadPoolUtils getInstance() {
-        return threadPoolUtils;
+    public static ThreadPoolUtilsImpl getInstance() {
+        return threadPoolUtilsImpl;
     }
 
 
@@ -51,7 +53,7 @@ public final class ThreadPoolUtils {
     /**
      * 私有化构造方法
      */
-    private ThreadPoolUtils() {
+    private ThreadPoolUtilsImpl() {
     }
 
     /**
@@ -59,6 +61,7 @@ public final class ThreadPoolUtils {
      *
      * @param runnable
      */
+    @Override
     public void runOnMainThread(Runnable runnable) {
         handler.post(runnable);
     }
@@ -68,6 +71,7 @@ public final class ThreadPoolUtils {
      *
      * @param runnable
      */
+    @Override
     public void runSubThread(Runnable runnable) {
         if (!singleThreadExecutor.isShutdown()) {
             singleThreadExecutor.execute(runnable);
@@ -78,6 +82,7 @@ public final class ThreadPoolUtils {
     /**
      * 关闭线程池
      */
+    @Override
     public void kill() {
         if (!singleThreadExecutor.isShutdown()) {
             singleThreadExecutor.shutdown();

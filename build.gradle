@@ -2,6 +2,7 @@
 buildscript {
     ext._version="latest-release"
     repositories {
+        mavenLocal()
         google()
         jcenter()
     }
@@ -15,6 +16,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         google()
         jcenter()
     }
